@@ -10,10 +10,39 @@ alphanum = [lettre + chiffre];
 Tokens
 
 espaces = (' ' | 13 | 10)+;
-commentaire= '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
-virgule = ',';
+commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
 nombre = chiffre+;
-identif = alpha alphanum*;
+id = alpha alphanum*;
+lettre = [['a' .. 'z'] + ['A' .. 'Z']];
+chiffre = ['0' .. '9'];
+bool = []
+crochet_gauche = '[';
+crochet_droit = ']';
+parenthese_gauche = '(';
+parenthese_droite = ')';
+accolade_gauche = '{';
+accolade_droite = '}';
+egal = '=';
+si = 'si';
+sinon = 'sinon';
+alors = 'alors';
+tant_que = 'tantque';
+ecrire = 'ecrire';
+retour = 'retour';
+lire = 'lire';
+inf = '<';
+sup = '>';
+div = '/';
+plus = '+';
+moins = '-';
+mul = '*';
+exclam = '!';
+bool = 'bool';
+entier = 'entier';
+vrai = 'vrai';
+faux = 'faux';
+point_virgule = ';';
+
 
 Ignored Tokens
 
@@ -21,8 +50,26 @@ espaces, commentaire;
 
 Productions
 
-// l'axiome
+p = ldv | ldf;
+ldv = espaces | dv |  ldvprime;
+ldvprime = espaces | virgule dv ldvprime;
+dv = type id | type ip crochet_gauche nb crochet_droit;
+type = bool | entier;
+ldf = df | df ldf;
+df = typeop id parenthese_gauche ldv parenthese_droite | ldv bloci;
+typeop = espaces | type;
+bloci = accolade_gauche li accolade_droite;
+i = var egal expr point_virgule | si expr alors bloci | si expr alors bloci sinon bloci | tant_que expr faire bloci | retour expr; | id parenthese_gauche expr parenthese_droite |ecrire parenthese_gauche expr parenthese_droite;
+lexpr = espaces | expr lexpr_prime;
+lexpr_prime = virgule expr lexpr_prime | espaces;
+var = id | id crochet_gauche expr crochet_droit;
+e = e | e2;
+e2 = e2 and e3 | e3;
+e3 = e3 inf e4 | e3 egal e4 | e4;
+e4 = e4 minus e5 | e4 sum e5 | e5;
+e5 = e5 divide e6 | e5 multiply e6 | e6;
+e6 = exclam e6 | e7;
+e7 = parenthese_gauche e parenthese_droite | nombre | vrai | faux | id parenthese_gauche lexp parenthese_droite | lire parenthese_gauche parenthese_droite | var;
 
-programme = listedecvar listedecfonc ;
 
 
