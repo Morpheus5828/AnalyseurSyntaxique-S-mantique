@@ -1,75 +1,149 @@
 Package sc;
 
 Helpers
-
-lettre = [['a' .. 'z'] + ['A' .. 'Z']];
-chiffre = ['0' .. '9'];
-alpha = [lettre + ['_' + '$']];
-alphanum = [lettre + chiffre];
+    lettre = [['a' .. 'z'] + ['A' .. 'Z']];
+    chiffre = ['0' .. '9'];
+    alpha = [lettre + ['_' + '$']];
+    alphanum = [lettre + chiffre];
 
 Tokens
+    crochet_gauche = '[';
+    crochet_droit = ']';
+    parenthese_gauche = '(';
+    parenthese_droite = ')';
+    accolade_gauche = '{';
+    accolade_droite = '}';
 
-espaces = (' ' | 13 | 10)+;
-commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
-nombre = chiffre+;
-id = alpha alphanum*;
-lettre = [['a' .. 'z'] + ['A' .. 'Z']];
-chiffre = ['0' .. '9'];
-bool = []
-crochet_gauche = '[';
-crochet_droit = ']';
-parenthese_gauche = '(';
-parenthese_droite = ')';
-accolade_gauche = '{';
-accolade_droite = '}';
-egal = '=';
-si = 'si';
-sinon = 'sinon';
-alors = 'alors';
-tant_que = 'tantque';
-ecrire = 'ecrire';
-retour = 'retour';
-lire = 'lire';
-inf = '<';
-sup = '>';
-div = '/';
-plus = '+';
-moins = '-';
-mul = '*';
-exclam = '!';
-bool = 'bool';
-entier = 'entier';
-vrai = 'vrai';
-faux = 'faux';
-point_virgule = ';';
+    si = 'si';
+    sinon = 'sinon';
+    alors = 'alors';
+    tant_que = 'tantque';
+    faire = 'faire';
+    ecrire = 'ecrire';
+    retour = 'retour';
+    lire = 'lire';
 
+    ou = '|';
+    et = '&';
+    egal = '=';
+    inf = '<';
+    plus = '+';
+    moins = '-';
+    mult = '*';
+    div = '/';
+    exclamation = '!';
+
+    bool = 'bool';
+    entier = 'entier';
+    vrai = 'vrai';
+    faux = 'faux';
+    virgule = ',';
+    point_virgule = ';';
+
+    espace = (' ' | 13 | 10)+;
+    commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
+    nombre = chiffre+;
+    identif = alpha alphanum*;
+    lettre = [['a' .. 'z'] + ['A' .. 'Z']];
+    chiffre = ['0' .. '9'];
 
 Ignored Tokens
-
-espaces, commentaire;
+    espace, commentaire;
 
 Productions
+    programme =
+        {axiome} liste_var liste_fonc;
 
-p = ldv | ldf;
-ldv = espaces | dv |  ldvprime;
-ldvprime = espaces | virgule dv ldvprime;
-dv = type id | type ip crochet_gauche nb crochet_droit;
-type = bool | entier;
-ldf = df | df ldf;
-df = typeop id parenthese_gauche ldv parenthese_droite | ldv bloci;
-typeop = espaces | type;
-bloci = accolade_gauche li accolade_droite;
-i = var egal expr point_virgule | si expr alors bloci | si expr alors bloci sinon bloci | tant_que expr faire bloci | retour expr; | id parenthese_gauche expr parenthese_droite |ecrire parenthese_gauche expr parenthese_droite;
-lexpr = espaces | expr lexpr_prime;
-lexpr_prime = virgule expr lexpr_prime | espaces;
-var = id | id crochet_gauche expr crochet_droit;
-e = e | e2;
-e2 = e2 and e3 | e3;
-e3 = e3 inf e4 | e3 egal e4 | e4;
-e4 = e4 minus e5 | e4 sum e5 | e5;
-e5 = e5 divide e6 | e5 multiply e6 | e6;
-e6 = exclam e6 | e7;
-e7 = parenthese_gauche e parenthese_droite | nombre | vrai | faux | id parenthese_gauche lexp parenthese_droite | lire parenthese_gauche parenthese_droite | var;
+    liste_var =
+        declaration_var liste_var_prime |
+        {vide} ;
+
+    liste_var_prime =
+        virgule declaration_var liste_var_prime |
+        {vide} ;
+
+    declaration_var =
+        type identif |
+        {tableau} type identif crochet_gauche nombre crochet_droit;
 
 
+    liste_fonc =
+        declaration_fonc liste_fonc |
+        {vide} ;
 
+    declaration_fonc =
+        type_optionnel identif parenthese_gauche [argument]:liste_var parenthese_droite [var_locale]:liste_var bloc_instruction;
+
+    type =
+        {bool} bool |
+        {entier} entier;
+
+    type_optionnel =
+        {type} type |
+        {vide} ;
+
+
+    bloc_instruction =
+        accolade_gauche liste_instruction accolade_droite;
+
+    liste_instruction =
+        instruction liste_instruction |
+        {vide} ;
+
+    instruction =
+        {affectation} var egal expr point_virgule |
+        {si} si expr alors bloc_instruction |
+        {si_sinon} si expr alors [si_instruction]:bloc_instruction sinon [sinon_instruction]:bloc_instruction |
+        {tant_que} tant_que expr faire bloc_instruction |
+        {retour} retour expr point_virgule |
+        {appel_fonction} identif parenthese_gauche liste_expr parenthese_droite point_virgule |
+        {ecrire} ecrire parenthese_gauche expr parenthese_droite point_virgule;
+
+
+    var =
+        identif |
+        {tableau} identif crochet_gauche expr crochet_droit;
+
+    liste_expr =
+        expr liste_expr_prime |
+        {vide} ;
+
+    liste_expr_prime =
+        virgule expr liste_expr_prime |
+        {vide} ;
+
+    expr =
+        {ou} expr ou expr2 |
+        {priorite_suivante} expr2;
+
+    expr2 =
+        {et} expr2 et expr3 |
+        {priorite_suivante} expr3;
+
+    expr3 =
+        {egal} expr3 egal expr4 |
+        {inf} expr3 inf expr4 |
+        {priorite_suivante} expr4;
+
+    expr4 =
+        {plus} expr4 plus expr5 |
+        {moins} expr4 moins expr5 |
+        {priorite_suivante} expr5;
+
+    expr5 =
+        {mult} expr5 mult expr6 |
+        {div} expr5 div expr6 |
+        {priorite_suivante} expr6;
+
+    expr6 =
+        {non} exclamation expr6 |
+        {priorite_suivante} expr7;
+
+    expr7 =
+        {entre_parantheses} parenthese_gauche expr parenthese_droite |
+        {nombre} nombre |
+        {vrai} vrai |
+        {faux} faux |
+        {appel_fonction} identif parenthese_gauche liste_expr parenthese_droite |
+        {lire} lire parenthese_gauche parenthese_droite |
+        {variable} var;
