@@ -16,6 +16,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="sablecc" level="project" />
+    <orderEntry type="library" exported="" name="sablecc" level="project" />
   </component>
 </module>
