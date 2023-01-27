@@ -44,8 +44,6 @@ Tokens
     commentaire = '#' [[0 .. 0xffff] - [10 + 13]]* (10 | 13 | 10 13);
     nombre = chiffre+;
     identif = alpha alphanum*;
-    lettre = [['a' .. 'z'] + ['A' .. 'Z']];
-    chiffre = ['0' .. '9'];
 
 Ignored Tokens
     espace, commentaire;
