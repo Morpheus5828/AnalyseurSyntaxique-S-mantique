@@ -1,9 +1,16 @@
 import java.io.*;
+<<<<<<< HEAD
 import org.sablecc.sablecc.parser.*;
 import org.sablecc.sablecc.lexer.*;
 import org.sablecc.sablecc.node.*;
 
 //import sa.*;
+=======
+import sc.parser.*;
+import sc.lexer.*;
+import sc.node.*;
+import sa.*;
+>>>>>>> ff8e31dc12b7630d5e32f8f1fe7112d03e693da7
 //import ts.*;
 //import c3a.*;
 //import nasm.*;
@@ -52,7 +59,7 @@ public class Compiler
 		tree.apply(new Sc2Xml(baseName));
 	    }
 	    
-	    /*	    System.out.println("[BUILD SA] ");
+	    System.out.println("[BUILD SA] ");
 	    Sc2sa sc2sa = new Sc2sa();
 	    tree.apply(sc2sa);
 	    SaNode saRoot = sc2sa.getRoot();
@@ -60,7 +67,7 @@ public class Compiler
 	    if(verboseLevel > 1){
 		System.out.println("[PRINT SA]");
 		new Sa2Xml(saRoot, baseName);
-		}*/
+		}
 	    
 	    /* System.out.println("[BUILD TS] ");
 	    Ts tableGlobale = new Sa2ts(saRoot).getTableGlobale();
