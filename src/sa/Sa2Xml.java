@@ -201,8 +201,13 @@ public class Sa2Xml extends SaDepthFirstVisitor < Void > {
     public Void visit(SaDecFonc node) throws Exception
     {
 	String nodeName = this.childName;
-	String attrValList = " nom=\"" + node.getNom() + "\"" + " typeRetour=\"" + node.getTypeRetour().nom() + "\"";
-	
+	String attrValList;
+
+	if (node.getTypeRetour() != null)
+		attrValList = " nom=\"" + node.getNom() + "\"" + " typeRetour=\"" + node.getTypeRetour().nom() + "\"";
+	else
+		attrValList = " nom=\"" + node.getNom() + "\"";
+
 	printOpenTag(nodeName, node, attrValList);
 	if(node.getParametres() != null){
 	    childName = "parametres";
