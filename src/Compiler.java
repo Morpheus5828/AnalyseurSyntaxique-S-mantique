@@ -1,17 +1,11 @@
 import java.io.*;
-<<<<<<< HEAD
-import org.sablecc.sablecc.parser.*;
-import org.sablecc.sablecc.lexer.*;
-import org.sablecc.sablecc.node.*;
 
-//import sa.*;
-=======
+import sa.*;
 import sc.parser.*;
 import sc.lexer.*;
 import sc.node.*;
 import sa.*;
->>>>>>> ff8e31dc12b7630d5e32f8f1fe7112d03e693da7
-//import ts.*;
+import ts.*;
 //import c3a.*;
 //import nasm.*;
 //import fg.*;

@@ -4,6 +4,7 @@ import ts.*;
 import util.Memory;
 
 public class SaEnvironment {
+    /*
     public Memory vars;
     public Memory args;
     public TypeVal returnValue;
@@ -30,4 +31,6 @@ public class SaEnvironment {
 
     public TypeVal getReturnValue(){return returnValue;}
     public void setReturnValue(TypeVal typeVal){returnValue = typeVal;}
+
+     */
 }
