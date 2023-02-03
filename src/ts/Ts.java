@@ -20,6 +20,14 @@ public class Ts
 	this.adrVarCourante = 0;
 	this.adrArgCourante = 0;
     }
+
+	public boolean containVar(String identify) {
+		return this.variables.containsKey(identify);
+	}
+
+	public boolean containFonc(String identify) {
+		return this.fonctions.containsKey(identify);
+	}
     
     public TsItemVar addVar(String identif, Type type)
     {
