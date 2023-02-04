@@ -36,67 +36,109 @@ public class Sa2ts extends SaDepthFirstVisitor <Void> {
 
 	@Override
 	public Void visit(SaDecVar node) throws Exception {
+		defaultIn(node);
 		switch (context) {
 			case LOCAL:
-				if(tableLocaleCourante.containVar(node.getNom()))
+				if(tableLocaleCourante.getVar(node.getNom()) == null)
 					throw new ErrorException(Error.TS, "Varibale: " + node.getNom() + " existe déjà");
 				node.setTsItem(tableLocaleCourante.addVar(node.getNom(), node.getType()));
 				break;
 			case PARAM:
-				if(tableLocaleCourante.containVar(node.getNom()))
+				if(tableLocaleCourante.getVar(node.getNom()) == null)
 					throw new ErrorException(Error.TS, "Varibale: " + node.getNom() + " existe déjà");
 				node.setTsItem(tableLocaleCourante.addParam(node.getNom(), node.getType()));
 				break;
 			case GLOBAL:
-				if(tableGlobale.containVar(node.getNom()))
+				if(tableGlobale.getVar(node.getNom()) == null)
 					throw new ErrorException(Error.TS, "Varibale: " + node.getNom() + " existe déjà");
 				node.setTsItem(tableGlobale.addVar(node.getNom(), node.getType()));
 				break;
 
 		}
+		defaultOut(node);
 		return null;
 	}
 
 	@Override
 	public Void visit(SaDecTab node) throws Exception {
+		defaultIn(node);
 		switch (context) {
 			case LOCAL:
-				if(tableLocaleCourante.containVar(node.getNom()))
+				if(tableLocaleCourante.getVar(node.getNom()) == null)
 					throw new ErrorException(Error.TS, "Tableau: " + node.getNom() + " existe déjà");
-				node.setTsItem(tableLocaleCourante.addTab(node.getNom(), node.getType(), node.getTaille()));
+				TsItemVar item = tableLocaleCourante.addTab(node.getNom(), node.getType(), node.getTaille());
+				item.isParam = false;
+				node.setTsItem(item);
 				break;
 			case PARAM:
-				if(tableLocaleCourante.containVar(node.getNom()))
+				if(tableLocaleCourante.getVar(node.getNom()) == null)
 					throw new ErrorException(Error.TS, "Tableau: " + node.getNom() + " existe déjà");
-				node.setTsItem(tableLocaleCourante.addTab(node.getNom(), node.getType(), node.getTaille()));
+				TsItemVar item1 = tableLocaleCourante.addTab(node.getNom(), node.getType(), node.getTaille());
+				item1.isParam = true;
+				node.setTsItem(item1);
 				break;
 			case GLOBAL:
-				if(tableGlobale.containVar(node.getNom()))
+				if(tableGlobale.getVar(node.getNom()) == null)
 					throw new ErrorException(Error.TS, "Tableau: " + node.getNom() + " existe déjà");
-				node.setTsItem(tableGlobale.addTab(node.getNom(), node.getType(), node.getTaille()));
+				TsItemVar item2 = tableGlobale.addTab(node.getNom(), node.getType(), node.getTaille());
+				item2.isParam = false;
+				node.setTsItem(item2);
 				break;
-
 		}
+		defaultOut(node);
 		return null;
 	}
 
 	@Override
 	public Void visit(SaDecFonc node) throws Exception {
+		defaultIn(node);
+		if(tableGlobale.getFct(node.getNom()) != null)
+			throw new ErrorException(Error.TS, "Fonction: " + node.getNom() + " existe déjà");
+		tableLocaleCourante = new Ts();
+		node.tsItem = tableGlobale.addFct(node.getNom(), node.getTypeRetour(), ,tableLocaleCourante, node);
+
+		if(node.getParametres() != null) {
+			context = Context.PARAM;
+			node.getParametres().accept(this);
+		}
+
+		if(node.getVariable() != null) {
+			context = Context.LOCAL;
+			node.getVariable().accept(this);
+		}
+
+		if(node.getCorps() != null) {
+			context = Context.LOCAL;
+			node.getCorps().accept(this);
+		}
+		context = Context.GLOBAL;
+		defaultOut(node);
 		return null;
 	}
 
 	@Override
 	public Void visit(SaVarSimple node) throws Exception {
+		defaultIn(node);
+		if(tableLocaleCourante.getVar(node.getNom()) == null)
+			throw new ErrorException(Error.TS, "Variable: " + node.getNom() + " n'existe pas");
+		node.tsItem = new TsItemVarSimple(node.getNom(), tableLocaleCourante.getVar(node.getNom()).getType());
+		defaultOut(node);
 		return null;
 	}
 
 	@Override
 	public Void visit(SaVarIndicee node) throws Exception {
+		defaultIn(node);
+		node.getIndice().accept(this);
+		defaultOut(node);
 		return null;
 	}
 
 	@Override
 	public Void visit(SaAppel node) throws Exception {
+		defaultIn(node);
+		if(node.getArguments() != null) node.getArguments().accept(this);
+		defaultOut(node);
 		return null;
 	}
 
