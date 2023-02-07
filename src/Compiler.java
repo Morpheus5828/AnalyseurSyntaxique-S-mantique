@@ -63,13 +63,13 @@ public class Compiler
 		new Sa2Xml(saRoot, baseName);
 		}
 	    
-	    /* System.out.println("[BUILD TS] ");
+	    System.out.println("[BUILD TS] ");
 	    Ts tableGlobale = new Sa2ts(saRoot).getTableGlobale();
 
 	    if(verboseLevel > 1){
 		System.out.println("[PRINT TS]");
 		tableGlobale.afficheTout(baseName);
-		}*/
+		}
 
 	    /*System.out.println("[TYPE CHECKING]");
 	      new SaTypeCheck(saRoot);*/

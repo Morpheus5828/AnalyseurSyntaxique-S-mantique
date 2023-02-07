@@ -51,17 +51,18 @@ public class Ts
 	return item;
     }
 
-    public TsItemVar addTab(String identif, Type type, int taille)
-    {
-	TsItemVar item = new TsItemVarTab(identif, type, taille);
-	item.portee = this;
-	item.adresse = this.adrVarCourante;
-	this.adrVarCourante += taille * type.taille();
-	this.variables.put(identif, item);
-	return item;
-    }
+	public TsItemVar addTab(String identif, Type type, int taille)
+	{
+		TsItemVar item = new TsItemVarTab(identif, type, taille);
+		item.portee = this;
+		item.adresse = this.adrVarCourante;
+		this.adrVarCourante += taille * type.taille();
+		this.variables.put(identif, item);
+		return item;
+	}
 
-    public TsItemFct addFct(String identif, Type typeRetour, int nbArgs, Ts table, SaDecFonc saDecFonc)
+
+	public TsItemFct addFct(String identif, Type typeRetour, int nbArgs, Ts table, SaDecFonc saDecFonc)
     {
 	TsItemFct item = new TsItemFct(identif, typeRetour, nbArgs, table, saDecFonc);
 	this.fonctions.put(identif, item);
