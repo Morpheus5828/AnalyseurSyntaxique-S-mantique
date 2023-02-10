@@ -336,7 +336,7 @@ public class Sc2sa extends DepthFirstAdapter
     @Override
     public void caseAVideTypeOptionnel(AVideTypeOptionnel node) {
         inAVideTypeOptionnel(node);
-        this.returnType = null;
+        this.returnType = Type.NUL;
         outAVideTypeOptionnel(node);
     }
 

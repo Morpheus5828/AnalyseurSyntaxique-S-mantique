@@ -4,7 +4,6 @@ import sa.*;
 import sc.parser.*;
 import sc.lexer.*;
 import sc.node.*;
-import sa.*;
 import ts.*;
 //import c3a.*;
 //import nasm.*;
