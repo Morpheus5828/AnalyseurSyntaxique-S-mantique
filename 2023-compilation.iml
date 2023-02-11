@@ -17,5 +17,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" exported="" name="sablecc" level="project" />
+    <orderEntry type="library" name="xerces-2_12_1" level="project" />
   </component>
 </module>

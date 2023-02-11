@@ -460,7 +460,7 @@ public class Sa2Xml extends SaDepthFirstVisitor < Void > {
 	String nodeName = this.childName;
 	printOpenTag(nodeName, node);
 	childName = "val";
-	node.getVal().accept(this);
+	if (node.getVal() != null) node.getVal().accept(this);
 	printCloseTag(nodeName);
 	return null;
     }

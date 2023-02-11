@@ -1,4 +1,4 @@
-import org.apache.xerces.parsers.*;
+import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.*;
 import sa.*;
 import ts.*;
