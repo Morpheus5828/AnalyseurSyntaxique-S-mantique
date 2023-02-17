@@ -1,5 +1,5 @@
 package sa;
-import java.util.*;
+import util.*;
 import ts.*;
 import util.Memory;
 

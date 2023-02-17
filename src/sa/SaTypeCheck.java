@@ -83,10 +83,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpAdd node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de l'addition.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de l'addition.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'addition.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'addition.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -97,10 +97,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpSub node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de la soustraction.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de la soustraction.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de la soustraction.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de la soustraction.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -111,10 +111,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpMult node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de la multiplication.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de la multiplication.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de la multiplication.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de la multiplication.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -125,10 +125,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpDiv node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de la division.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de la division.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de la division.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de la division.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -139,10 +139,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpInf node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de l'opération 'inférieur'.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de l'opération 'inférieur'.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'opération 'inférieur'.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'opération 'inférieur'.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -153,10 +153,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpEqual node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de l'égalité.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de l'égalité.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'égalité.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'égalité.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -167,10 +167,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpAnd node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de l'opérande 'et'.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + node.getType() + "' de l'opérande 'et'.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.BOOL))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.BOOL + "' de l'opérande 'et'.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.BOOL))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.BOOL + "' de l'opérande 'et'.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -182,10 +182,10 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpOr node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type " + node.getType() + " de l'opérande 'ou'.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type " + node.getType() + " de l'opérande 'ou'.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.BOOL))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type " + Type.BOOL + " de l'opérande 'ou'.");
+        if (!Type.checkCompatibility(node.getOp2().getType(), Type.BOOL))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type " + Type.BOOL + " de l'opérande 'ou'.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
@@ -196,8 +196,8 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpNot node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), node.getType()))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getType() + "' de l'opérande 'non'.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.BOOL))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.BOOL + "' de l'opérande 'non'.");
         node.getOp1().accept(this);
         defaultOut(node);
         return null;

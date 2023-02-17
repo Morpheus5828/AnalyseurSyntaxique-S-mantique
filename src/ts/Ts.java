@@ -28,6 +28,7 @@ public class Ts
 	public boolean containFonc(String identify) {
 		return this.fonctions.containsKey(identify);
 	}
+
     
     public TsItemVar addVar(String identif, Type type)
     {
