@@ -10,11 +10,11 @@ public class Sc2sa extends DepthFirstAdapter
     private Type returnType;
 
     public void defaultIn(Node node) {
-	    System.out.println("<" + node.getClass().getSimpleName() + ">");
+	    //System.out.println("<" + node.getClass().getSimpleName() + ">");
     }
 
     public void defaultOut(Node node) {
-	    System.out.println("</" + node.getClass().getSimpleName() + ">");
+	    //System.out.println("</" + node.getClass().getSimpleName() + ">");
     }
     
     public SaNode getRoot() {
