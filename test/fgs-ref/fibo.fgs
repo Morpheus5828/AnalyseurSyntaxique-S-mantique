@@ -13,12 +13,12 @@ use = () def = ()	in = ()	 	out = ()	 		push	ecx	;sauvegarde de ecx
 use = () def = ()	in = ()	 	out = ()	 		push	edx	;sauvegarde de edx
 use = () def = ()	in = ()	 	out = ()	 		sub	esp,	0	;allocation des variables locales
 use = () def = (1 )	in = ()	 	out = (1 )	 		mov	r1,	1	;Affect
-use = () def = ()	in = (1 )	 	out = (1 )	 		cmp	dword [ebp+4*3],	2	;JumpIfLess 1
+use = () def = ()	in = (1 )	 	out = (1 )	 		cmp	dword [ebp+12],	2	;JumpIfLess 1
 use = () def = ()	in = (1 )	 	out = (1 )	 		jl	l2	;JumpIfLess 2
 use = () def = (1 )	in = ()	 	out = (1 )	 		mov	r1,	0	;Affect
 use = (1 ) def = ()	in = (1 )	 	out = ()	 	l2 :	cmp	r1,	0	;JumpIfEqual 1
 use = () def = ()	in = ()	 	out = ()	 		je	l0	;JumpIfEqual 2
-use = () def = ()	in = ()	 	out = ()	 		mov	dword [ebp+4*2],	1	;ecriture de la valeur de retour
+use = () def = ()	in = ()	 	out = ()	 		mov	dword [ebp+8],	1	;ecriture de la valeur de retour
 use = () def = ()	in = ()	 	out = ()	 		add	esp,	0	;désallocation des variables locales
 use = () def = (14 )	in = ()	 	out = ()	 		pop	edx	;restaure edx
 use = () def = (15 )	in = ()	 	out = ()	 		pop	ecx	;restaure ecx
@@ -27,14 +27,14 @@ use = () def = (17 )	in = ()	 	out = ()	 		pop	eax	;restaure eax
 use = () def = ()	in = ()	 	out = ()	 		pop	ebp	;restaure la valeur de ebp
 use = () def = ()	in = ()	 	out = ()	 		ret	;
 use = () def = ()	in = ()	 	out = ()	 		jmp	l1	;Jump
-use = () def = (3 )	in = ()	 	out = (3 )	 	l0 :	mov	r3,	dword [ebp+4*3]	;
+use = () def = (3 )	in = ()	 	out = (3 )	 	l0 :	mov	r3,	dword [ebp+12]	;
 use = (3 ) def = (3 )	in = (3 )	 	out = ()	 		sub	r3,	1	;
 use = () def = ()	in = ()	 	out = ()	 		push	r3	;Param
 use = () def = ()	in = ()	 	out = ()	 		sub	esp,	4	;allocation mémoire pour la valeur de retour
 use = () def = ()	in = ()	 	out = ()	 		call	fibo	;
 use = () def = (2 )	in = ()	 	out = (2 )	 		pop	r2	;récupération de la valeur de retour
 use = () def = ()	in = (2 )	 	out = (2 )	 		add	esp,	4	;désallocation des arguments
-use = () def = (5 )	in = (2 )	 	out = (2 5 )	 		mov	r5,	dword [ebp+4*3]	;
+use = () def = (5 )	in = (2 )	 	out = (2 5 )	 		mov	r5,	dword [ebp+12]	;
 use = (5 ) def = (5 )	in = (2 5 )	 	out = (2 )	 		sub	r5,	2	;
 use = () def = ()	in = (2 )	 	out = (2 )	 		push	r5	;Param
 use = () def = ()	in = (2 )	 	out = (2 )	 		sub	esp,	4	;allocation mémoire pour la valeur de retour
@@ -43,7 +43,7 @@ use = () def = (4 )	in = (2 )	 	out = (2 4 )	 		pop	r4	;récupération de la val
 use = () def = ()	in = (2 4 )	 	out = (2 4 )	 		add	esp,	4	;désallocation des arguments
 use = (2 ) def = (6 )	in = (2 4 )	 	out = (4 6 )	 		mov	r6,	r2	;
 use = (4 6 ) def = (6 )	in = (4 6 )	 	out = (6 )	 		add	r6,	r4	;
-use = (6 ) def = ()	in = (6 )	 	out = ()	 		mov	dword [ebp+4*2],	r6	;ecriture de la valeur de retour
+use = (6 ) def = ()	in = (6 )	 	out = ()	 		mov	dword [ebp+8],	r6	;ecriture de la valeur de retour
 use = () def = ()	in = ()	 	out = ()	 		add	esp,	0	;désallocation des variables locales
 use = () def = (18 )	in = ()	 	out = ()	 		pop	edx	;restaure edx
 use = () def = (19 )	in = ()	 	out = ()	 		pop	ecx	;restaure ecx
