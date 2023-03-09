@@ -153,10 +153,8 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     public Void visit(SaExpEqual node) throws Exception
     {
         defaultIn(node);
-        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'égalité.");
-        if (!Type.checkCompatibility(node.getOp2().getType(), Type.ENTIER))
-            throw new ErrorException(Error.TYPE, "Type '" + node.getOp2().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'égalité.");
+        if (!Type.checkCompatibility(node.getOp1().getType(), node.getOp2().getType()))
+            throw new ErrorException(Error.TYPE, "Impossible de tester l'égalité entre deux opérandes de type différent: '" + node.getOp1().getType() + "' incompatible avec le type '" + node.getOp2().getType() + "'.");
         node.getOp1().accept(this);
         node.getOp2().accept(this);
         defaultOut(node);
