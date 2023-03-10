@@ -72,32 +72,24 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 	@Override
 	public NasmOperand visit(C3aInstCall inst) {
-		NasmRegister reg_esp = nasm.newRegister();
-		reg_esp.colorRegister(Nasm.REG_ESP);
-
 		NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
-		nasm.ajouteInst(new NasmSub(label, reg_esp, new NasmConstant(4), ""));
+		nasm.ajouteInst(new NasmSub(label, esp, new NasmConstant(4), ""));
 		nasm.ajouteInst(new NasmCall(null, inst.op1.accept(this), ""));
 		nasm.ajouteInst(new NasmPop(null, inst.result.accept(this), ""));
-		nasm.ajouteInst(new NasmAdd(null, reg_esp, new NasmConstant(inst.op1.val.nbArgs * 4), ""));
+		nasm.ajouteInst(new NasmAdd(null, esp, new NasmConstant(inst.op1.val.nbArgs * 4), ""));
 
 		return null;
 	}
 
 	@Override
 	public NasmOperand visit(C3aInstFBegin inst) {
-		NasmRegister reg_ebp = new NasmRegister(Nasm.REG_EBP);
-		reg_ebp.colorRegister(Nasm.REG_EBP);
-		NasmRegister reg_esp = new NasmRegister(Nasm.REG_ESP);
-		reg_ebp.colorRegister(Nasm.REG_ESP);
-
 		NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
-		nasm.ajouteInst(new NasmPush(label , reg_ebp, ""));
-		nasm.ajouteInst(new NasmMov(null , reg_ebp, reg_esp, ""));
+		nasm.ajouteInst(new NasmPush(label , ebp, ""));
+		nasm.ajouteInst(new NasmMov(null , ebp, esp, ""));
 		if (inst.val.saDecFonc.getVariable() == null)
-			nasm.ajouteInst(new NasmSub(null , reg_esp, new NasmConstant(0), ""));
+			nasm.ajouteInst(new NasmSub(null , esp, new NasmConstant(0), ""));
 		else
-			nasm.ajouteInst(new NasmSub(null , reg_esp, new NasmConstant(inst.val.saDecFonc.getVariable().length() * 4), ""));
+			nasm.ajouteInst(new NasmSub(null , esp, new NasmConstant(inst.val.saDecFonc.getVariable().length() * 4), ""));
 		return null;
 	}
 
@@ -170,14 +162,9 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 	@Override
 	public NasmOperand visit(C3aInstFEnd inst) {
-		NasmRegister reg_esp = nasm.newRegister();
-		reg_esp.colorRegister(Nasm.REG_ESP);
-		NasmRegister reg_ebp = nasm.newRegister();
-		reg_ebp.colorRegister(Nasm.REG_EBP);
-
 		NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
-		nasm.ajouteInst(new NasmAdd(label, reg_esp, new NasmConstant(4), ""));
-		nasm.ajouteInst(new NasmPop(null, reg_ebp, ""));
+		nasm.ajouteInst(new NasmAdd(label, esp, new NasmConstant(4), ""));
+		nasm.ajouteInst(new NasmPop(null, ebp, ""));
 		nasm.ajouteInst(new NasmRet(null, ""));
 		return null;
 	}
@@ -218,11 +205,8 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 	@Override
 	public NasmOperand visit(C3aInstReturn inst) {
-		NasmRegister reg_epb = nasm.newRegister();
-		reg_epb.colorRegister(Nasm.REG_EBP);
-
 		NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
-		nasm.ajouteInst(new NasmMov(label, new NasmAddress(reg_epb, '+', new NasmConstant(8)) ,inst.op1.accept(this), ""));
+		nasm.ajouteInst(new NasmMov(label, new NasmAddress(ebp, '+', new NasmConstant(8)) ,inst.op1.accept(this), ""));
 		return null;
 	}
 
