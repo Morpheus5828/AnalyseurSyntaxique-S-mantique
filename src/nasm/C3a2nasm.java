@@ -223,8 +223,16 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 	@Override
 	public NasmOperand visit(C3aInstStop inst) {
+		NasmRegister reg_eax = nasm.newRegister();
+		reg_eax.colorRegister(Nasm.REG_EAX);
+		NasmRegister reg_ebx = nasm.newRegister();
+		reg_ebx.colorRegister(Nasm.REG_EBX);
+
 		NasmOperand label = (inst.label != null) ? inst.label.accept(this) : null;
-		nasm.ajouteInst(new NasmInt(label, ""));
+
+		nasm.ajouteInst(new NasmMov(label, reg_ebx, new NasmConstant(0), " valeur de retour du programme"));
+		nasm.ajouteInst(new NasmMov(null, reg_eax, new NasmConstant(1), " code de sortie"));
+		nasm.ajouteInst(new NasmInt(null, ""));
 		return null;
 	}
 
