@@ -50,7 +50,10 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 	@Override
 	public NasmOperand visit(C3aVar oper) {
-		return null;
+		if (oper.index == null)
+				return new NasmAddress(new NasmConstant(oper.item.adresse), '+', null);
+		else
+			return new NasmAddress(new NasmConstant(oper.item.adresse), '+', oper.index.accept(this));
 	}
 
 	@Override
@@ -89,7 +92,10 @@ public class C3a2nasm implements C3aVisitor <NasmOperand> {
 
 		nasm.ajouteInst(new NasmPush(null , reg_ebp, ""));
 		nasm.ajouteInst(new NasmMov(null , reg_ebp, reg_esp, ""));
-		nasm.ajouteInst(new NasmSub(null , reg_esp, new NasmConstant(inst.val.saDecFonc.getVariable().length() * 4), ""));
+		if (inst.val.saDecFonc.getVariable() == null)
+			nasm.ajouteInst(new NasmSub(null , reg_esp, new NasmConstant(0), ""));
+		else
+			nasm.ajouteInst(new NasmSub(null , reg_esp, new NasmConstant(inst.val.saDecFonc.getVariable().length() * 4), ""));
 		return null;
 	}
 

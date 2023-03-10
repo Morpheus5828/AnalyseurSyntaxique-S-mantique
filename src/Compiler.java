@@ -1,14 +1,12 @@
 import java.io.*;
 
-import c3a.C3a;
-import c3a.Sa2c3a;
 import sa.*;
 import sc.parser.*;
 import sc.lexer.*;
 import sc.node.*;
 import ts.*;
-//import c3a.*;
-//import nasm.*;
+import c3a.*;
+import nasm.*;
 //import fg.*;
 //import ig.*;
 
@@ -83,12 +81,12 @@ public class Compiler
 		c3a.affiche(baseName);
 		}
 	    
-	    /*System.out.println("[BUILD PRE NASM] ");
+	    System.out.println("[BUILD PRE NASM] ");
 	    Nasm nasm = new C3a2nasm(c3a, tableGlobale).getNasm();
 	    if(verboseLevel > 1){
 		System.out.println("[PRINT PRE NASM] ");
 		nasm.affichePreNasm(baseName);
-		}*/
+		}
 	    
 	    /*System.out.println("[BUILD FG] ");
 	    Fg fg = new Fg(nasm);
