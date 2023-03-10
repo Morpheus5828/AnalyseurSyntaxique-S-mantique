@@ -115,12 +115,12 @@ public class Sa2c3a extends SaDepthFirstVisitor <C3aOperand> {
             C3aOperand op1 = node.getTest().accept(this);
             c3a.ajouteInst(new C3aInstJumpIfEqual(op1, new C3aConstant(0), faux, ""));
             if (node.getAlors() != null) node.getAlors().accept(this);
-
             c3a.ajouteInst(new C3aInstJump(suite, ""));
+
             c3a.addLabelToNextInst(faux);
             node.getSinon().accept(this);
 
-            if(node.getSinon() != null) c3a.addLabelToNextInst(suite);
+            c3a.addLabelToNextInst(suite);
         }
 
         defaultOut(node);
