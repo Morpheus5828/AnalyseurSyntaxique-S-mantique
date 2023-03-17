@@ -11,6 +11,8 @@ public class Fg implements NasmVisitor <Void> {
     Map< Node, NasmInst> node2Inst;
     Map< String, NasmInst> label2Inst;
 
+    int count;
+
     public Fg(Nasm nasm){
 	this.nasm = nasm;
 	this.inst2Node = new HashMap< NasmInst, Node>();
@@ -29,7 +31,10 @@ public class Fg implements NasmVisitor <Void> {
 	/* on construit les arcs */
 	int instNb = nasm.sectionText.size();
 	for (int i = 0; i < instNb; i++) {
+        count = i;
 	    NasmInst nasmInst = nasm.sectionText.get(i);
+        nasmInst.accept(this);
+
 	}
     }
 
@@ -64,79 +69,83 @@ public class Fg implements NasmVisitor <Void> {
     
     public Void visit(NasmAdd inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;
     }
     public Void visit(NasmCall inst){
         Node node = inst2Node.get(inst);
-        NasmInst dest = label2Inst.get(inst.address.toString());
-        graph.addEdge(node, inst2Node.get(dest));
+        String label = inst.address.toString();
+
+        if (label.equals("iprintLF")) return null;
+        graph.addEdge(node, inst2Node.get(label2Inst.get(label)));
         return null;}
     public Void visit(NasmDiv inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmJe inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
     public Void visit(NasmJle inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
-    public Void visit(NasmJne inst){Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+    public Void visit(NasmJne inst){
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
     public Void visit(NasmMul inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmOr inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmCmp inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);return null;}
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
+        return null;}
     public Void visit(NasmInst inst){return null;}
     public Void visit(NasmJge inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
     public Void visit(NasmJl inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
     public Void visit(NasmNot inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmPop inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmRet inst){return null;}
     public Void visit(NasmXor inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmAnd inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmJg inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node, node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
@@ -147,15 +156,15 @@ public class Fg implements NasmVisitor <Void> {
         return null;}
     public Void visit(NasmMov inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmPush inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmSub inst){
         Node node = inst2Node.get(inst);
-        graph.addEdge(node,node.succ().head);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(count+1)));
         return null;}
     public Void visit(NasmEmpty inst){return null;}
     public Void visit(NasmInt inst){return null;}

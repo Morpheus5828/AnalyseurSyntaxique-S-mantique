@@ -1,5 +1,7 @@
 import java.io.*;
 
+import fg.Fg;
+import fg.FgSolution;
 import sa.*;
 import sc.parser.*;
 import sc.lexer.*;
@@ -88,7 +90,7 @@ public class Compiler
 		nasm.affichePreNasm(baseName);
 		}
 	    
-	    /*System.out.println("[BUILD FG] ");
+	    System.out.println("[BUILD FG] ");
 	    Fg fg = new Fg(nasm);
 		
 	    if(verboseLevel > 1){
@@ -96,7 +98,7 @@ public class Compiler
 		fg.affiche(baseName);
 	    }
 		
-	    System.out.println("[SOLVE FG]");
+	    /*System.out.println("[SOLVE FG]");
 	    FgSolution fgSolution = new FgSolution(nasm, fg);
 	    if(verboseLevel > 1){
 		System.out.println("[PRINT FG SOLUTION] ");
