@@ -98,12 +98,12 @@ public class Compiler
 		fg.affiche(baseName);
 	    }
 		
-	    /*System.out.println("[SOLVE FG]");
+	    System.out.println("[SOLVE FG]");
 	    FgSolution fgSolution = new FgSolution(nasm, fg);
 	    if(verboseLevel > 1){
 		System.out.println("[PRINT FG SOLUTION] ");
 		fgSolution.affiche(baseName);
-		}*/
+		}
 	    
 	    /*System.out.println("[BUILD IG] ");
 	    Ig ig = new Ig(fgSolution);
