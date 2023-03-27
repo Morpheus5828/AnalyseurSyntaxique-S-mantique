@@ -232,25 +232,46 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return null;
     }
-    
-    public TypeVal visit(SaInstAffect node) throws Exception
-    {
-	defaultIn(node);
-	TypeVal typeVal = node.getRhs().accept(this);
-	if(node.getLhs() instanceof SaVarIndicee){ // c'est une case de tableau, donc forcément globale
-	    SaVarIndicee lhsIndicee = (SaVarIndicee) node.getLhs();
-	    TypeVal indice = lhsIndicee.getIndice().accept(this);
-	    setVarGlobIndicee(lhsIndicee, indice, typeVal);
+
+	public TypeVal visit(SaInstAffect node) throws Exception
+	{
+		defaultIn(node);
+		TypeVal typeVal = node.getRhs().accept(this);
+		if(node.getLhs() instanceof SaVarIndicee){ // c'est une case de tableau, donc forcément globale
+			SaVarIndicee lhsIndicee = (SaVarIndicee) node.getLhs();
+			TypeVal indice = lhsIndicee.getIndice().accept(this);
+			setVarGlobIndicee(lhsIndicee, indice, typeVal);
+		}
+		else{
+			setVar((SaVarSimple) node.getLhs(), typeVal);
+		}
+
+		defaultOut(node);
+		return null;
 	}
-	else{
-	    setVar((SaVarSimple) node.getLhs(), typeVal);
+	public TypeVal visit(SaInstIncr node) throws Exception
+	{
+		defaultIn(node);
+		TypeVal typeValExp = node.getExp().accept(this);
+		if(node.getVar() instanceof SaVarIndicee){ // c'est une case de tableau, donc forcément globale
+			SaVarIndicee varIndicee = (SaVarIndicee) node.getVar();
+			TypeVal indice = varIndicee.getIndice().accept(this);
+			TypeVal typeValVar = getVarGlobIndicee(varIndicee, indice);
+			TypeVal typeValIncr = new TypeVal(typeValVar.valInt + typeValExp.valInt);
+			setVarGlobIndicee(varIndicee, indice, typeValIncr);
+		}
+		else{
+			SaVarSimple varSimple = (SaVarSimple) node.getVar();
+			TypeVal typeValVar = getVar(varSimple);
+			TypeVal typeValIncr = new TypeVal(typeValVar.valInt + typeValExp.valInt);
+			setVar(varSimple, typeValIncr);
+		}
+
+		defaultOut(node);
+		return null;
 	}
-	
-	defaultOut(node);
-	return null;
-    }
-    
-    // LDEC -> DEC LDEC 
+
+	// LDEC -> DEC LDEC
     // LDEC -> null 
     /*    public TypeVal visit(SaLDec node) throws Exception
     {
