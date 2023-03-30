@@ -2,6 +2,7 @@ import java.io.*;
 
 import fg.Fg;
 import fg.FgSolution;
+import ig.Ig;
 import sa.*;
 import sc.parser.*;
 import sc.lexer.*;
@@ -105,19 +106,19 @@ public class Compiler
 		fgSolution.affiche(baseName);
 		}
 	    
-	    /*System.out.println("[BUILD IG] ");
+	    System.out.println("[BUILD IG] ");
 	    Ig ig = new Ig(fgSolution);
 	    
 	    if(verboseLevel > 1){
 		System.out.println("[PRINT IG] ");
 		ig.affiche(baseName);
-		}*/
+		}
 	    
-	    /*System.out.println("[ALLOCATE REGISTERS]");
+	    System.out.println("[ALLOCATE REGISTERS]");
 	    ig.allocateRegisters();
 				
 	    System.out.println("[PRINT NASM]");
-	    nasm.afficheNasm(baseName);*/
+	    nasm.afficheNasm(baseName);
 	    
 	}
 	catch(Exception e){

@@ -16,9 +16,9 @@ C3aVM: c3a/*.java C3aVM.java
 	javac C3aVM.java
 
 Compiler.jar : Compiler
-	jar cmf Compiler.mf Compiler.jar *.class sc sa ts nasm util c3a fg ig
+	jar cmf Compiler.mf Compiler.jar *.class sc sa ts nasm util c3a fg ig2
 
-Compiler: Compiler.java sa/*.java c3a/*.java ts/*.java nasm/*.java fg/*.java util/intset/*.java  util/graph/*.java ig/*.java
+Compiler: Compiler.java sa/*.java c3a/*.java ts/*.java nasm/*.java fg/*.java util/intset/*.java  util/graph/*.java ig2/*.java
 	javac sa/*.java
 	javac c3a/*.java
 	javac ts/*.java
@@ -26,7 +26,7 @@ Compiler: Compiler.java sa/*.java c3a/*.java ts/*.java nasm/*.java fg/*.java uti
 	javac fg/*.java
 	javac util/intset/*.java
 	javac util/graph/*.java
-	javac ig/*.java
+	javac ig2/*.java
 	javac Compiler.java
 
 parser: grammaireL.sablecc
@@ -39,7 +39,7 @@ clean:
 	-rm ts/*.class
 	-rm nasm/*.class
 	-rm fg/*.class
-	-rm ig/*.class
+	-rm ig2/*.class
 	-rm util/intset/*.class
 	-rm util/graph/*.class
 
