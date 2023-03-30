@@ -84,6 +84,7 @@ public class Ig {
     public void allocateRegisters() {
         final int [] precoloredTemporaries = getPrecoloredTemporaries();
         final ColorGraph colorGraph = new ColorGraph(this.graph, 4, precoloredTemporaries);
+        colorGraph.color();
 
         // pour toutes les instructions du code pre nasm
         for (NasmInst node : this.nasm.sectionText) {
