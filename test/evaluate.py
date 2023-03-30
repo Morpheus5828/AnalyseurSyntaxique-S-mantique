@@ -43,7 +43,7 @@ def compileCompiler() :
       print(errMess, file=outErr)
       exit(1)
     print("", file=outVerbose)
-    classpath = "../xerces-2_12_1/*;%s"%srcPath
+    classpath = "../xerces-2_12_1/*:%s"%srcPath
   classpath = ""
 ################################################################################
 
@@ -72,10 +72,10 @@ def findClasspath() :
       continue
     for filename in files :
       if os.path.splitext(filename)[1] in [".class", ".jar"] :
-        classpath += ("" if len(classpath) == 0 else ";") + root
+        classpath += ("" if len(classpath) == 0 else ":") + root
         break
 
-  classpath += ("" if len(classpath) == 0 else ";")+"../xerces-2_12_1/*"
+  classpath += ("" if len(classpath) == 0 else ":")+"../xerces-2_12_1/*"
   return classpath
 ################################################################################
 
