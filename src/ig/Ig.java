@@ -24,10 +24,11 @@ public class Ig {
 	this.build();
     }
     
-    public void build(){
+    public void build() {
+
     }
 
-    public void allocateRegisters(){
+    public void allocateRegisters() {
     }
 
 

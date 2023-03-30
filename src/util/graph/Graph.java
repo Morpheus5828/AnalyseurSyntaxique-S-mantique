@@ -14,11 +14,11 @@ public class Graph {
 	if (n.mygraph != this)
 	    throw new Error("Graph.addEdge using nodes from the wrong graph");
     }
-    
+
     public int nodeCount(){
-	return nodecount;
+        return nodecount;
     }
-	
+
 	static boolean inList(Node a, NodeList l) {
 	for(NodeList p=l; p!=null; p=p.tail)
 	    if (p.head==a) return true;
@@ -32,7 +32,7 @@ public class Graph {
 	}
 	return array;
     }
-    
+
 
   public void addNOEdge(Node from, Node to) {
       check(from); check(to);

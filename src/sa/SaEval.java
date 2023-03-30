@@ -17,7 +17,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	    TsItemVarSimple tsItem = saVar.getTsItem();
 	    return getVar(tsItem);
     }
-    
+
     public TypeVal getVar(TsItemVarSimple tsItem){
 	    Memory container = null;
 	    if(tsItem.portee == this.tableGlobale) // variable globale
@@ -112,7 +112,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     {
     }
 
-    // P -> LDEC LDEC 
+    // P -> LDEC LDEC
+	@Override
     public TypeVal visit(SaProg node) throws Exception
     {
 	defaultIn(node);
@@ -124,13 +125,15 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
     
-    // DEC -> var id taille 
+    // DEC -> var id taille
+	@Override
     public TypeVal visit(SaDecTab node) throws Exception{
 	defaultIn(node);
 	defaultOut(node);
 	return null;
     }
-    
+
+	@Override
     public TypeVal visit(SaExp node) throws Exception
     {
 	defaultIn(node);
@@ -139,6 +142,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
     
     // EXP -> entier
+	@Override
     public TypeVal visit(SaExpInt node) throws Exception
     {
 	defaultIn(node);
@@ -148,6 +152,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 
 
     // EXP -> vrai
+	@Override
     public TypeVal visit(SaExpVrai node) throws Exception
     {
 	defaultIn(node);
@@ -156,13 +161,15 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
     
     // EXP -> faux
+	@Override
     public TypeVal visit(SaExpFaux node) throws Exception
     {
 	defaultIn(node);
 	defaultOut(node);
 	return new TypeVal(false);
     }
-        
+
+	@Override
     public TypeVal visit(SaExpVar node) throws Exception
     {
 	defaultIn(node);
@@ -170,7 +177,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return typeVal;
     }
-    
+
+	@Override
     public TypeVal visit(SaInstEcriture node) throws Exception
     {
 	defaultIn(node);
@@ -186,7 +194,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return null;
     }
-    
+
+	@Override
     public TypeVal visit(SaInstTantQue node) throws Exception
     {
 	defaultIn(node);
@@ -203,7 +212,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return null;
     }
-    
+
+	@Override
     public TypeVal visit(SaLInst node) throws Exception
     {
 	defaultIn(node);
@@ -214,7 +224,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
 
-    // DEC -> fct id LDEC LDEC LINST 
+    // DEC -> fct id LDEC LDEC LINST
+	@Override
     public TypeVal visit(SaDecFonc node) throws Exception
     {
 	defaultIn(node);
@@ -225,7 +236,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
     
-    // DEC -> var id 
+    // DEC -> var id
+	@Override
     public TypeVal visit(SaDecVar node) throws Exception
     {
 	defaultIn(node);
@@ -233,6 +245,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
 
+	@Override
 	public TypeVal visit(SaInstAffect node) throws Exception
 	{
 		defaultIn(node);
@@ -249,6 +262,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 		defaultOut(node);
 		return null;
 	}
+
+	/*
 	public TypeVal visit(SaInstIncr node) throws Exception
 	{
 		defaultIn(node);
@@ -270,6 +285,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 		defaultOut(node);
 		return null;
 	}
+	 */
 
 	// LDEC -> DEC LDEC
     // LDEC -> null 
@@ -281,7 +297,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return null;
 	}*/
-    
+
+	@Override
     public TypeVal visit(SaVarSimple node) throws Exception
     {
 	defaultIn(node);
@@ -289,7 +306,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return typeVal;
     }
-    
+
+	@Override
     public TypeVal visit(SaAppel node) throws Exception
     {
 	defaultIn(node);
@@ -328,7 +346,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return returnValue;
     }
-    
+
+	@Override
     public TypeVal visit(SaExpAppel node) throws Exception
     {
 	defaultIn(node);
@@ -338,6 +357,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> add EXP EXP
+	@Override
     public TypeVal visit(SaExpAdd node) throws Exception
     {
 	defaultIn(node);
@@ -348,6 +368,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> sub EXP EXP
+	@Override
     public TypeVal visit(SaExpSub node) throws Exception
     {
 	defaultIn(node);
@@ -358,6 +379,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> mult EXP EXP
+	@Override
     public TypeVal visit(SaExpMult node) throws Exception
     {
 	defaultIn(node);
@@ -368,6 +390,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> div EXP EXP
+	@Override
     public TypeVal visit(SaExpDiv node) throws Exception
     {
 	defaultIn(node);
@@ -378,6 +401,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
     
     // EXP -> inf EXP EXP
+	@Override
     public TypeVal visit(SaExpInf node) throws Exception
     {
 	defaultIn(node);
@@ -388,6 +412,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> eq EXP EXP
+	@Override
     public TypeVal visit(SaExpEqual node) throws Exception
     {
 	defaultIn(node);
@@ -401,6 +426,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> and EXP EXP
+	@Override
     public TypeVal visit(SaExpAnd node) throws Exception
     {
 	defaultIn(node);
@@ -411,6 +437,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
     
     // EXP -> or EXP EXP
+	@Override
     public TypeVal visit(SaExpOr node) throws Exception
     {
 	defaultIn(node);
@@ -421,6 +448,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
     }
 
     // EXP -> not EXP
+	@Override
     public TypeVal visit(SaExpNot node) throws Exception
     {
 	defaultIn(node);
@@ -429,7 +457,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return new TypeVal(!op1.valBool);
     }
 
-
+	@Override
     public TypeVal visit(SaExpLire node) throws Exception
     {
 	defaultIn(node);
@@ -437,6 +465,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
 
+	@Override
     public TypeVal visit(SaInstBloc node) throws Exception
     {
 	defaultIn(node);
@@ -444,7 +473,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	defaultOut(node);
 	return null;
     }
-    
+
+	@Override
     public TypeVal visit(SaInstSi node) throws Exception
     {
 	defaultIn(node);
@@ -457,7 +487,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
 
-// INST -> ret EXP 
+// INST -> ret EXP
+	@Override
     public TypeVal visit(SaInstRetour node) throws Exception
     {
 	defaultIn(node);
@@ -467,7 +498,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
 
-    
+	@Override
     public TypeVal visit(SaLExp node) throws Exception
     {
 	defaultIn(node);
@@ -478,6 +509,7 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 	return null;
     }
 
+	@Override
     public TypeVal visit(SaVarIndicee node) throws Exception
     {
 	defaultIn(node);

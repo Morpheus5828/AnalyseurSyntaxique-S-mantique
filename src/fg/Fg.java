@@ -99,89 +99,123 @@ public class Fg implements NasmVisitor <Void> {
         NasmInst dest = label2Inst.get(inst.address.toString());
         graph.addEdge(node, inst2Node.get(dest));
         return null;}
-    public Void visit(NasmJne inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        NasmInst dest = label2Inst.get(inst.address.toString());
-        graph.addEdge(node, inst2Node.get(dest));
-        return null;}
-    public Void visit(NasmMul inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmOr inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmCmp inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmInst inst){return null;}
-    public Void visit(NasmJge inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        NasmInst dest = label2Inst.get(inst.address.toString());
-        graph.addEdge(node, inst2Node.get(dest));
-        return null;}
-    public Void visit(NasmJl inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        NasmInst dest = label2Inst.get(inst.address.toString());
-        graph.addEdge(node, inst2Node.get(dest));
-        return null;}
-    public Void visit(NasmNot inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmPop inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmRet inst){return null;}
-    public Void visit(NasmXor inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmAnd inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmJg inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        NasmInst dest = label2Inst.get(inst.address.toString());
-        graph.addEdge(node, inst2Node.get(dest));
-        return null;}
-    public Void visit(NasmJmp inst){
-        Node node = inst2Node.get(inst);
-        NasmInst dest = label2Inst.get(inst.address.toString());
-        graph.addEdge(node, inst2Node.get(dest));
-        return null;}
-    public Void visit(NasmMov inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmPush inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmSub inst){
-        Node node = inst2Node.get(inst);
-        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
-        return null;}
-    public Void visit(NasmEmpty inst){return null;}
-    public Void visit(NasmInt inst){return null;}
 
-    public Void visit(NasmAddress operand){return null;}
-    public Void visit(NasmConstant operand){return null;}
-    public Void visit(NasmLabel operand){return null;}
-    public Void visit(NasmRegister operand){return null;}
+    public Void visit(NasmJne inst)
+    {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        NasmInst dest = label2Inst.get(inst.address.toString());
+        graph.addEdge(node, inst2Node.get(dest));
+        return null;
+    }
 
-    public Void visit(NasmResb pseudoInst){return null;}
-    public Void visit(NasmResw pseudoInst){return null;}
-    public Void visit(NasmResd pseudoInst){return null;}
-    public Void visit(NasmResq pseudoInst){return null;}
-    public Void visit(NasmRest pseudoInst){return null;}
+    public Void visit(NasmMul inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmOr inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmCmp inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmInst inst) {return null;}
+
+    public Void visit(NasmJge inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        NasmInst dest = label2Inst.get(inst.address.toString());
+        graph.addEdge(node, inst2Node.get(dest));
+        return null;
+    }
+
+    public Void visit(NasmJl inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        NasmInst dest = label2Inst.get(inst.address.toString());
+        graph.addEdge(node, inst2Node.get(dest));
+        return null;
+    }
+
+    public Void visit(NasmNot inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmPop inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmRet inst) {return null;}
+
+    public Void visit(NasmXor inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmAnd inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmJg inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        NasmInst dest = label2Inst.get(inst.address.toString());
+        graph.addEdge(node, inst2Node.get(dest));
+        return null;
+    }
+
+    public Void visit(NasmJmp inst) {
+        Node node = inst2Node.get(inst);
+        NasmInst dest = label2Inst.get(inst.address.toString());
+        graph.addEdge(node, inst2Node.get(dest));
+        return null;
+    }
+
+    public Void visit(NasmMov inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmPush inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmSub inst) {
+        Node node = inst2Node.get(inst);
+        graph.addEdge(node, inst2Node.get(nasm.sectionText.get(iterNum +1)));
+        return null;
+    }
+
+    public Void visit(NasmEmpty inst) {return null;}
+    public Void visit(NasmInt inst) {return null;}
+
+    public Void visit(NasmAddress operand) {return null;}
+    public Void visit(NasmConstant operand) {return null;}
+    public Void visit(NasmLabel operand) {return null;}
+    public Void visit(NasmRegister operand) {return null;}
+
+    public Void visit(NasmResb pseudoInst) {return null;}
+    public Void visit(NasmResw pseudoInst) {return null;}
+    public Void visit(NasmResd pseudoInst) {return null;}
+    public Void visit(NasmResq pseudoInst) {return null;}
+    public Void visit(NasmRest pseudoInst) {return null;}
 
 }
