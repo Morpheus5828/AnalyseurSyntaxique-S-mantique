@@ -6,11 +6,9 @@ import util.intset.*;
 import java.io.*;
 import java.util.*;
 
-public class FgSolution implements NasmVisitor<Void> {
+public class FgSolution {
     int nasmNum = 0;
 	int iterNum = 0;
-	boolean isUsed;
-	boolean isDef;
     public Nasm nasm;
     Fg fg;
     public Map< NasmInst, IntSet> use;
@@ -27,20 +25,32 @@ public class FgSolution implements NasmVisitor<Void> {
 		in = new HashMap<>();
 		out = new HashMap<>();
 
-		int instNb = nasm.sectionText.size();
-		for (int i = 0; i < instNb; i++) {
-			nasmNum = i;
-			NasmInst nasmInst = nasm.sectionText.get(i);
+		for (NasmInst inst : nasm.sectionText) {
+			use.put(inst, new IntSet(nasm.getTempCounter()));
+			def.put(inst, new IntSet(nasm.getTempCounter()));
+			in.put(inst, new IntSet(nasm.getTempCounter()));
+			out.put(inst, new IntSet(nasm.getTempCounter()));
 
-			use.put(nasmInst, new IntSet(nasm.getTempCounter()));
-			def.put(nasmInst, new IntSet(nasm.getTempCounter()));
-			in.put(nasmInst, new IntSet(nasm.getTempCounter()));
-			out.put(nasmInst, new IntSet(nasm.getTempCounter()));
+			if (inst.source != null) handleNasmOperand(inst, inst.srcDef, inst.srcUse, inst.source);
+			if (inst.destination != null) handleNasmOperand(inst, inst.destDef, inst.destUse, inst.destination);
+		}
+		FgSolve();
+	}
 
-			nasmInst.accept(this);
+	public void handleNasmOperand(final NasmInst inst, final boolean isDef, final boolean isUsed, final NasmOperand operand) {
+		if (operand instanceof NasmAddress) {
+			final NasmAddress address = (NasmAddress) operand;
+			if (address.base != null) handleNasmOperand(inst, false, true,address.base);
+			if (address.offset != null) handleNasmOperand(inst, false, true,address.offset);
+			return;
 		}
 
-		FgSolve();
+		if (operand.isGeneralRegister()) {
+			final NasmRegister register = (NasmRegister) operand;
+			if (isDef) def.get(inst).add(register.val);
+			if (isUsed) use.get(inst).add(register.val);
+			return;
+		}
 	}
     
     public void FgSolve() {
@@ -96,251 +106,4 @@ public class FgSolution implements NasmVisitor<Void> {
 	}
 	
     }
-
-
-	@Override
-	public Void visit(NasmAdd inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmCall inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmDiv inst) {
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJe inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJle inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJne inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmMul inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmOr inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmCmp inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmInst inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJge inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJl inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmNot inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmPop inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmRet inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmXor inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmAnd inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJg inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmJmp inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmMov inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmPush inst) {
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmSub inst) {
-		isDef = inst.destDef;
-		isUsed = inst.destUse;
-		inst.destination.accept(this);
-
-		isDef = inst.srcDef;
-		isUsed = inst.srcUse;
-		inst.source.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmEmpty inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmInt inst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmAddress operand) {
-		isDef = false;
-		isUsed = true;
-		operand.base.accept(this);
-		operand.offset.accept(this);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmConstant operand) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmLabel operand) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmRegister operand) {
-		if (!operand.isGeneralRegister()) return null;
-		NasmInst inst = nasm.sectionText.get(nasmNum);
-
-		if (isUsed) use.get(inst).add(operand.val);
-		if (isDef) def.get(inst).add(operand.val);
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmResb pseudoInst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmResw pseudoInst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmResd pseudoInst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmResq pseudoInst) {
-		return null;
-	}
-
-	@Override
-	public Void visit(NasmRest pseudoInst) {
-		return null;
-	}
 }
