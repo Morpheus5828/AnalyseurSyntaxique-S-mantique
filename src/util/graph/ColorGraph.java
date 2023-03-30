@@ -6,13 +6,13 @@ import java.util.*;
 import java.io.*;
 
 public class ColorGraph {
-    public  Graph          graph;
-    public  int            vertexNb;
+    public  Graph          graph; // graph à colorer
+    public  int            vertexNb; // nombre de sommet
     private Stack<Integer> stack;
-    public  IntSet         removed;
-    public  IntSet         spill;
-    public  int[]          color;
-    public  int            colorNb;
+    public  IntSet         removed; // sommet enlevés
+    public  IntSet         spill; // sommets qui debordent
+    public  int[]          color; // tableau de couleur
+    public  int            colorNb; // nombre de couleur
     public  Node[]         int2Node;
     static  int            NOCOLOR = -1;
 

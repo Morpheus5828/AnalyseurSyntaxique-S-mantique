@@ -32,7 +32,6 @@ public class IntSet{
 	return true;
     }
 
-    
     public void add(int elt){
 	if(elt >= size){
 	    System.err.println("ERROR : set is too small !!!!");

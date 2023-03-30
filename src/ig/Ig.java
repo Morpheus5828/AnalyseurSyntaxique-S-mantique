@@ -8,10 +8,10 @@ import java.util.*;
 import java.io.*;
 
 public class Ig {
-    public Graph graph;
-    public FgSolution fgs;
-    public int regNb;
-    public Nasm nasm;
+    public Graph graph; // graphe interference
+    public FgSolution fgs; // les ensembles in et out
+    public int regNb; // le nombre de registres fictifs
+    public Nasm nasm; // le pré nasm
     public Node int2Node[];
     
     
@@ -24,12 +24,49 @@ public class Ig {
 	this.build();
     }
     
-    public void build(){
+    public void build() {
+		// algo 1
+		for(int index = 0; index < regNb; index++)
+			this.int2Node[index] = this.graph.newNode();
+
+		for(NasmInst node : this.nasm.sectionText) {
+			for(int i = 0; i < fgs.in.get(node).getSize(); i++) {
+				for(int j = 0; j < fgs.in.get(node).getSize(); j++) {
+					if(i != j) {
+						if (fgs.in.get(node).isMember(i) && fgs.in.get(node).isMember(j)) {
+							graph.addEdge(this.int2Node[i], this.int2Node[j]);
+						}
+					}
+				}
+			}
+
+			for(int i = 0; i < fgs.out.get(node).getSize(); i++) {
+				for(int j = 0; i < fgs.out.get(node).getSize(); j++) {
+					if(i != j) {
+						if (fgs.out.get(node).isMember(i) && fgs.out.get(node).isMember(j)) {
+						    graph.addEdge(this.int2Node[i], this.int2Node[j]);
+						}
+					}
+				}
+			}
+		}
+
     }
 
     public void allocateRegisters(){
+		// pour toutes les instructions du code pre nasm
+		for(NasmInst node : this.nasm.sectionText) {
+
+		}
     }
 
+	public int[] getPrecoloredTemporaries() {
+		final int[] precolored = new int[regNb];
+
+
+
+		return precolored;
+	}
 
     public void affiche(String baseFileName){
 	String fileName;

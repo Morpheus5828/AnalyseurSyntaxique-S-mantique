@@ -35,7 +35,7 @@ public abstract class NasmInst{
 	return s;
     }
 
-        public <T> T accept(NasmVisitor <T> visitor) {
+	public <T> T accept(NasmVisitor <T> visitor) {
         return visitor.visit(this);
     }
 
