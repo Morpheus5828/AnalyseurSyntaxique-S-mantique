@@ -178,9 +178,13 @@ public class SaVM {
 
 	String instType = getType(node);
 	if(instType.equals("SaInstAffect"))
-	    return processSaInstAffect(node);
+		return processSaInstAffect(node);
+	if(instType.equals("SaInstIncr"))
+		return processSaInstIncr(node);
 	if(instType.equals("SaInstTantQue"))
-	    return processSaInstTantQue(node);
+			return processSaInstTantQue(node);
+	if(instType.equals("SaInstFaire"))
+			return processSaInstFaire(node);
 	if(instType.equals("SaInstBloc"))
 	    return processSaInstBloc(node);
 	if(instType.equals("SaInstEcriture"))
@@ -194,33 +198,61 @@ public class SaVM {
 	return null;
     }
 
-    public static SaInstAffect processSaInstAffect(Node node){
-	SaVar lhs = null;
-	SaExp rhs = null;
-	for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
-	    if(child.getNodeName().equals("lhs"))
-		lhs = processSaVar(child);
-	    else if(child.getNodeName().equals("rhs"))
-		rhs = processSaExp(child);
+	public static SaInstAffect processSaInstAffect(Node node){
+		SaVar lhs = null;
+		SaExp rhs = null;
+		for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
+			if(child.getNodeName().equals("lhs"))
+				lhs = processSaVar(child);
+			else if(child.getNodeName().equals("rhs"))
+				rhs = processSaExp(child);
+		}
+		return new SaInstAffect(lhs, rhs);
 	}
-	return new SaInstAffect(lhs, rhs);
-    }  
+
+	public static SaInstIncr processSaInstIncr(Node node){
+		SaVar var = null;
+		SaExp exp = null;
+		for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
+			if(child.getNodeName().equals("var"))
+				var = processSaVar(child);
+			else if(child.getNodeName().equals("exp"))
+				exp = processSaExp(child);
+		}
+		return new SaInstIncr(var, exp);
+	}
 
 
-    public static SaInstTantQue processSaInstTantQue(Node node){
-	SaExp test = null;
-	SaInst faire = null;
-	
-	for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
-	    if(child.getNodeName().equals("test"))
-		test = processSaExp(child);
-	    else if(child.getNodeName().equals("faire"))
-		faire = processSaInst(child);
+
+
+	public static SaInstTantQue processSaInstTantQue(Node node){
+		SaExp test = null;
+		SaInst faire = null;
+
+		for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
+			if(child.getNodeName().equals("test"))
+				test = processSaExp(child);
+			else if(child.getNodeName().equals("faire"))
+				faire = processSaInst(child);
+		}
+		return new SaInstTantQue(test, faire);
 	}
-	return new SaInstTantQue(test, faire);
-    }   
-    
-    public static SaInstBloc processSaInstBloc(Node node){
+
+	public static SaInstFaire processSaInstFaire(Node node){
+		SaExp test = null;
+		SaInst faire = null;
+
+		for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
+			if(child.getNodeName().equals("test"))
+				test = processSaExp(child);
+			else if(child.getNodeName().equals("faire"))
+				faire = processSaInst(child);
+		}
+		return new SaInstFaire(test, faire);
+	}
+
+
+	public static SaInstBloc processSaInstBloc(Node node){
 	SaLInst val = null;
 	for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
 	    if(child.getNodeName().equals("val"))
@@ -292,7 +324,8 @@ public class SaVM {
 	    return processSaExpMult(node);
 	if(expType.equals("SaExpDiv"))
 	    return processSaExpDiv(node);
-
+	if(expType.equals("SaExpCarre"))
+		return processSaExpCarre(node);
 	if(expType.equals("SaExpAnd"))
 	    return processSaExpAnd(node);
 	if(expType.equals("SaExpOr"))
@@ -402,16 +435,25 @@ public class SaVM {
 	}
 	return new SaExpAppel(val);
     }
-    
-    public static SaExpNot processSaExpNot(Node node){
-	SaExp op1 = null;
-	for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
-	    if(child.getNodeName().equals("op1"))
-		op1 = processSaExp(child);
+
+	public static SaExpNot processSaExpNot(Node node){
+		SaExp op1 = null;
+		for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
+			if(child.getNodeName().equals("op1"))
+				op1 = processSaExp(child);
+		}
+		return new SaExpNot(op1);
 	}
-	return new SaExpNot(op1);
-    }
-    
+
+	public static SaExpCarre processSaExpCarre(Node node){
+		SaExp op1 = null;
+		for(Node child = node.getFirstChild(); child != null; child = child.getNextSibling()){
+			if(child.getNodeName().equals("op1"))
+				op1 = processSaExp(child);
+		}
+		return new SaExpCarre(op1);
+	}
+
     public static SaExpDiv processSaExpDiv(Node node){
 	SaExp op1 = null;
 	SaExp op2 = null;
