@@ -31,14 +31,34 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
     }
 
     @Override
-    public Void visit(SaInstTantQue node) throws Exception
-    {
+    public Void visit(SaInstTantQue node) throws Exception {
         defaultIn(node);
         if (!Type.checkCompatibility(node.getTest().getType(), Type.BOOL))
             throw new ErrorException(Error.TYPE, "Le test d'une boucle 'tant que' doit être de type 'bool', pas de type '" + node.getTest().getType() + "'.");
         node.getTest().accept(this);
         if (node.getFaire() != null)
             node.getFaire().accept(this);
+        defaultOut(node);
+        return null;
+    }
+
+    public Void visit(SaInstFaire node) throws Exception {
+        defaultIn(node);
+        if (node.getFaire() != null)
+            node.getFaire().accept(this);
+        defaultOut(node);
+        if (!Type.checkCompatibility(node.getTest().getType(), Type.BOOL))
+            throw new ErrorException(Error.TYPE, "Le test d'une boucle 'faire tant que' doit être de type 'bool', pas de type '" + node.getTest().getType() + "'.");
+        node.getTest().accept(this);
+        return null;
+    }
+
+
+    public Void visit(SaExpCarre node) throws Exception {
+        defaultIn(node);
+        if (!Type.checkCompatibility(node.getOp1().getType(), Type.ENTIER))
+            throw new ErrorException(Error.TYPE, "Type '" + node.getOp1().getType() + "' incompatible avec le type '" + Type.ENTIER + "' de l'opérande 'power'.");
+        node.getOp1().accept(this);
         defaultOut(node);
         return null;
     }
@@ -250,5 +270,7 @@ public class SaTypeCheck extends SaDepthFirstVisitor <Void>{
         defaultOut(node);
         return null;
     }
+
+
 
 }
