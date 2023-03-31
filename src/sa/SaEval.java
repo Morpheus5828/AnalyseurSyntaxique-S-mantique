@@ -245,22 +245,25 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 		return null;
     }
 
-	public TypeVal visit(SaInstAffect node) throws Exception {
+
+	public TypeVal visit(SaInstAffect node) throws Exception
+	{
 		defaultIn(node);
 		TypeVal typeVal = node.getRhs().accept(this);
 		if(node.getLhs() instanceof SaVarIndicee){ // c'est une case de tableau, donc forcément globale
 			SaVarIndicee lhsIndicee = (SaVarIndicee) node.getLhs();
 			TypeVal indice = lhsIndicee.getIndice().accept(this);
 			setVarGlobIndicee(lhsIndicee, indice, typeVal);
-		} else{
+		}
+		else{
 			setVar((SaVarSimple) node.getLhs(), typeVal);
 		}
 
 		defaultOut(node);
 		return null;
 	}
-
-	public TypeVal visit(SaInstIncr node) throws Exception {
+	public TypeVal visit(SaInstIncr node) throws Exception
+	{
 		defaultIn(node);
 		TypeVal typeValExp = node.getExp().accept(this);
 		if(node.getVar() instanceof SaVarIndicee){ // c'est une case de tableau, donc forcément globale
@@ -269,7 +272,8 @@ public class SaEval extends SaDepthFirstVisitor <TypeVal> {
 			TypeVal typeValVar = getVarGlobIndicee(varIndicee, indice);
 			TypeVal typeValIncr = new TypeVal(typeValVar.valInt + typeValExp.valInt);
 			setVarGlobIndicee(varIndicee, indice, typeValIncr);
-		} else{
+		}
+		else{
 			SaVarSimple varSimple = (SaVarSimple) node.getVar();
 			TypeVal typeValVar = getVar(varSimple);
 			TypeVal typeValIncr = new TypeVal(typeValVar.valInt + typeValExp.valInt);

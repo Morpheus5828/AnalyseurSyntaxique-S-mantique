@@ -125,7 +125,7 @@ def deleteCompilationOutputs() :
 ################################################################################
 def compileInputFiles(inputFiles) :
   for inputFile in inputFiles :
-    print("Compiling %s..."%inputFile, end="", file=outVerbose)
+    print("Compiling %s..."%inputFile, file=outVerbose, flush=True, end='')
     returnCode = subprocess.Popen("{} {}{}".format(compiler(), inputPath, inputFile), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).wait()
     if returnCode == 0 :
       print("Done", file=outVerbose)

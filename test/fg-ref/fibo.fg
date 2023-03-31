@@ -12,12 +12,12 @@
 11 : ( 12 )		push	edx	;sauvegarde de edx
 12 : ( 13 )		sub	esp,	0	;allocation des variables locales
 13 : ( 14 )		mov	r1,	1	;Affect
-14 : ( 15 )		cmp	dword [ebp+4*3],	2	;JumpIfLess 1
+14 : ( 15 )		cmp	dword [ebp+12],	2	;JumpIfLess 1
 15 : ( 16 17 )		jl	l2	;JumpIfLess 2
 16 : ( 17 )		mov	r1,	0	;Affect
 17 : ( 18 )	l2 :	cmp	r1,	0	;JumpIfEqual 1
 18 : ( 19 28 )		je	l0	;JumpIfEqual 2
-19 : ( 20 )		mov	dword [ebp+4*2],	1	;ecriture de la valeur de retour
+19 : ( 20 )		mov	dword [ebp+8],	1	;ecriture de la valeur de retour
 20 : ( 21 )		add	esp,	0	;désallocation des variables locales
 21 : ( 22 )		pop	edx	;restaure edx
 22 : ( 23 )		pop	ecx	;restaure ecx
@@ -26,14 +26,14 @@
 25 : ( 26 )		pop	ebp	;restaure la valeur de ebp
 26 : ( )		ret	;
 27 : ( 52 )		jmp	l1	;Jump
-28 : ( 29 )	l0 :	mov	r3,	dword [ebp+4*3]	;
+28 : ( 29 )	l0 :	mov	r3,	dword [ebp+12]	;
 29 : ( 30 )		sub	r3,	1	;
 30 : ( 31 )		push	r3	;Param
 31 : ( 32 )		sub	esp,	4	;allocation mémoire pour la valeur de retour
 32 : ( 33 )		call	fibo	;
 33 : ( 34 )		pop	r2	;récupération de la valeur de retour
 34 : ( 35 )		add	esp,	4	;désallocation des arguments
-35 : ( 36 )		mov	r5,	dword [ebp+4*3]	;
+35 : ( 36 )		mov	r5,	dword [ebp+12]	;
 36 : ( 37 )		sub	r5,	2	;
 37 : ( 38 )		push	r5	;Param
 38 : ( 39 )		sub	esp,	4	;allocation mémoire pour la valeur de retour
@@ -42,7 +42,7 @@
 41 : ( 42 )		add	esp,	4	;désallocation des arguments
 42 : ( 43 )		mov	r6,	r2	;
 43 : ( 44 )		add	r6,	r4	;
-44 : ( 45 )		mov	dword [ebp+4*2],	r6	;ecriture de la valeur de retour
+44 : ( 45 )		mov	dword [ebp+8],	r6	;ecriture de la valeur de retour
 45 : ( 46 )		add	esp,	0	;désallocation des variables locales
 46 : ( 47 )		pop	edx	;restaure edx
 47 : ( 48 )		pop	ecx	;restaure ecx
