@@ -30,6 +30,7 @@ Tokens
     plus = '+';
     moins = '-';
     mult = '*';
+    power = '**';
     div = '/';
     exclamation = '!';
 
@@ -95,8 +96,8 @@ Productions
         {tant_que} tant_que exp faire bloc_instruction |
         {retour} retour exp point_virgule |
         {appel_fonction} identif parenthese_gauche liste_exp parenthese_droite point_virgule |
-        {ecrire} ecrire parenthese_gauche exp parenthese_droite point_virgule;
-
+        {ecrire} ecrire parenthese_gauche exp parenthese_droite point_virgule |
+        {faire_tant_que} faire bloc_instruction tant_que exp;
 
     var =
         identif |
@@ -138,6 +139,10 @@ Productions
         {exp6} exp6;
 
     exp6 =
+        {power} exp6 power |
+        {exp7} exp7;
+
+    exp7 =
         {entre_parantheses} parenthese_gauche exp parenthese_droite |
         {nombre} nombre |
         {vrai} vrai |
